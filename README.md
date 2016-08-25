@@ -1,7 +1,14 @@
+[![Latest Stable Version](https://poser.pugx.org/renedekat/blmreader/v/stable)](https://packagist.org/packages/renedekat/blmreader)
+[![Total Downloads](https://poser.pugx.org/renedekat/blmreader/downloads)](https://packagist.org/packages/renedekat/blmreader)
+[![License](https://poser.pugx.org/renedekat/blmreader/license)](https://packagist.org/packages/renedekat/blmreader)
+[![composer.lock](https://poser.pugx.org/renedekat/blmreader/composerlock)](https://packagist.org/packages/renedekat/blmreader)
+
+[![StyleCI](https://styleci.io/repos/66577700/shield)](https://styleci.io/repos/66577700)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/renedekat/blmreader/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/renedekat/blmreader/?branch=master)
+
 # BLM Reader
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what
-PSRs you support to avoid any confusion with users and contributors.
+
 
 ## Install
 
