@@ -286,5 +286,4 @@ class Reader
             ->anythingBut('#')
             ->addModifier('sm');
     }
-
 }
