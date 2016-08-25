@@ -40,7 +40,6 @@ class BlmParserTest extends PHPUnit_Framework_TestCase
         $this->expectException(InvalidBlmFileException::class);
 
         Reader::create()->loadFromFile(dirname(__FILE__) . '/invalid.blm');
-
     }
 
     /**

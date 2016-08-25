@@ -263,7 +263,7 @@ class Reader
                 return trim($record);
             })->map(function ($record) use ($eof) {
                 return explode($eof, $record);
-            })->map(function( $record) use ($definitions) {
+            })->map(function ($record) use ($definitions) {
                 return collect($record)
                     ->filter(function ($column, $offset) use ($definitions) {
                         return $definitions->offsetExists($offset);
