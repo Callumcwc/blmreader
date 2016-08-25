@@ -10,7 +10,6 @@ use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 class Reader
 {
-
     const CONTAINS_HEADERS = 1;
     const CONTAINS_DEFINITIONS = 2;
     const CONTAINS_DATA = 4;
@@ -51,7 +50,6 @@ class Reader
      */
     public function loadFromFile($filePath)
     {
-
         if (!file_exists($filePath)) {
             throw new FileNotFoundException();
         }
@@ -131,7 +129,6 @@ class Reader
      */
     protected function containsValidBLM($contents)
     {
-
         $contains = $this->containsHeader($contents) ? self::CONTAINS_HEADERS : 0;
         $contains += $this->containsDefinition($contents) ? self::CONTAINS_DEFINITIONS : 0;
         $contains += $this->containsData($contents) ? self::CONTAINS_DATA : 0;
@@ -177,7 +174,6 @@ class Reader
      */
     protected function parse($contents)
     {
-
         $this->contents = $contents;
 
         $this->parseHeader($contents);
@@ -195,18 +191,17 @@ class Reader
      */
     protected function parseHeader($contents)
     {
-
         preg_match($this->getRegexFor('#HEADER#'), $contents, $match);
 
         $this->headers = collect(explode("\n", $match[0]))
-            ->map(function($linesWithSpaces) {
+            ->map(function ($linesWithSpaces) {
                 return trim($linesWithSpaces);
             })
-            ->reject(function($line) {
+            ->reject(function ($line) {
                 return '' === $line || false === strpos($line, ':');
-            })->map(function($line) {
+            })->map(function ($line) {
                 return explode(' : ', $line);
-            })->flatMap(function($keyValuePairWithQuotes) {
+            })->flatMap(function ($keyValuePairWithQuotes) {
                 return [
                     $keyValuePairWithQuotes[0] => preg_replace('/(^[\'"]|[\'"]$)/', '',
                         trim($keyValuePairWithQuotes[1]))
@@ -220,8 +215,7 @@ class Reader
      */
     protected function parseDefinition($contents)
     {
-
-        if(empty($this->headers)) {
+        if (empty($this->headers)) {
             $this->parseHeader($contents);
         }
 
@@ -231,13 +225,13 @@ class Reader
         $eor = $this->headers->get('EOR');
 
         $this->definitions = collect(explode("\n", $match[0]))
-            ->reject(function($line) {
+            ->reject(function ($line) {
                 return false !== strpos($line, '#') || '' === trim($line);
-            })->flatMap(function($definitions) use ($eof) {
+            })->flatMap(function ($definitions) use ($eof) {
                 return explode($eof, $definitions);
-            })->map(function($definition) {
+            })->map(function ($definition) {
                 return trim($definition);
-            })->reject(function($defintion) use ($eor) {
+            })->reject(function ($defintion) use ($eor) {
                 return '' === $defintion || $eor === $defintion;
             });
     }
@@ -248,8 +242,7 @@ class Reader
      */
     protected function parseData($contents)
     {
-
-        if(empty($this->definitions)) {
+        if (empty($this->definitions)) {
             $this->parseDefinition($contents);
         }
 
@@ -260,24 +253,24 @@ class Reader
         $definitions = $this->definitions;
 
         $this->data = collect(explode("\n", $match[0]))
-            ->reject(function($line) {
+            ->reject(function ($line) {
                 return false !== strpos($line, '#') || '' === trim($line);
-            })->flatMap(function($data) use ($eor) {
+            })->flatMap(function ($data) use ($eor) {
                 return explode($eor, $data);
-            })->reject(function($line) {
-                return '' === $line ;
-            })->map(function($record) {
+            })->reject(function ($line) {
+                return '' === $line;
+            })->map(function ($record) {
                 return trim($record);
-            })->map(function($record) use ($eof) {
+            })->map(function ($record) use ($eof) {
                 return explode($eof, $record);
-            })->map(function($record) use ($definitions) {
+            })->map(function( $record) use ($definitions) {
                 return collect($record)
-                    ->filter(function($column, $offset) use ($definitions) {
+                    ->filter(function ($column, $offset) use ($definitions) {
                         return $definitions->offsetExists($offset);
                     })
-                ->flatMap(function($column, $index) use ($definitions) {
-                    return [$definitions[$index] => $column];
-                })->toArray();
+                    ->flatMap(function ($column, $index) use ($definitions) {
+                        return [$definitions[$index] => $column];
+                    })->toArray();
             })->values();
     }
 
