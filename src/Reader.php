@@ -59,7 +59,7 @@ class Reader
         $contents = file_get_contents($filePath);
 
         if (!$this->containsValidBLM($contents)) {
-            throw new InvalidBlmFileException();
+            throw new InvalidBlmFileException('No valid BLM file found.');
         }
 
         return $this->parse($contents);
@@ -73,7 +73,7 @@ class Reader
     public function loadFromString($contents)
     {
         if (!$this->containsValidBLM($contents)) {
-            throw new InvalidBlmStringException();
+            throw new InvalidBlmStringException('Invalid BLM content found.');
         }
 
         return $this->parse($contents);
