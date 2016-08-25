@@ -215,10 +215,6 @@ class Reader
      */
     protected function parseDefinition($contents)
     {
-        if (empty($this->headers)) {
-            $this->parseHeader($contents);
-        }
-
         preg_match($this->getRegexFor('#DEFINITION#'), $contents, $match);
 
         $eof = $this->headers->get('EOF');
@@ -226,7 +222,7 @@ class Reader
 
         $this->definitions = collect(explode("\n", $match[0]))
             ->reject(function ($line) {
-                return false !== strpos($line, '#') || '' === trim($line);
+                return $this->isValidLineWithoutHash($line);
             })->flatMap(function ($definitions) use ($eof) {
                 return explode($eof, $definitions);
             })->map(function ($definition) {
@@ -242,19 +238,14 @@ class Reader
      */
     protected function parseData($contents)
     {
-        if (empty($this->definitions)) {
-            $this->parseDefinition($contents);
-        }
-
         preg_match($this->getRegexFor('#DATA#'), $contents, $match);
 
         $eof = $this->headers->get('EOF');
         $eor = $this->headers->get('EOR');
-        $definitions = $this->definitions;
 
         $this->data = collect(explode("\n", $match[0]))
             ->reject(function ($line) {
-                return false !== strpos($line, '#') || '' === trim($line);
+                return $this->isValidLineWithoutHash($line);
             })->flatMap(function ($data) use ($eor) {
                 return explode($eor, $data);
             })->reject(function ($line) {
@@ -263,14 +254,8 @@ class Reader
                 return trim($record);
             })->map(function ($record) use ($eof) {
                 return explode($eof, $record);
-            })->map(function ($record) use ($definitions) {
-                return collect($record)
-                    ->filter(function ($column, $offset) use ($definitions) {
-                        return $definitions->offsetExists($offset);
-                    })
-                    ->flatMap(function ($column, $index) use ($definitions) {
-                        return [$definitions[$index] => $column];
-                    })->toArray();
+            })->map(function ($record) {
+                return $this->mapRecordToDefinitionValue($record);
             })->values();
     }
 
@@ -285,5 +270,30 @@ class Reader
             ->find($string)
             ->anythingBut('#')
             ->addModifier('sm');
+    }
+
+    /**
+     * @param $line
+     * @return bool
+     */
+    private function isValidLineWithoutHash($line)
+    {
+        return false !== strpos($line, '#') || '' === trim($line);
+    }
+    /**
+     * @param array $record
+     * @return array
+     */
+    private function mapRecordToDefinitionValue($record)
+    {
+        $definitions = $this->definitions;
+
+        return collect($record)
+            ->filter(function ($column, $offset) use ($definitions) {
+                return $definitions->offsetExists($offset);
+            })
+            ->flatMap(function ($column, $index) use ($definitions) {
+                return [$definitions[$index] => $column];
+            })->toArray();
     }
 }
