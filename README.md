@@ -3,8 +3,9 @@
 [![License](https://poser.pugx.org/renedekat/blmreader/license)](https://packagist.org/packages/renedekat/blmreader)
 [![composer.lock](https://poser.pugx.org/renedekat/blmreader/composerlock)](https://packagist.org/packages/renedekat/blmreader)
 
+
 [![Build Status](https://scrutinizer-ci.com/g/renedekat/blmreader/badges/build.png?b=master)](https://scrutinizer-ci.com/g/renedekat/blmreader/build-status/master)
-[![Build Status](https://scrutinizer-ci.com/g/renedekat/blmreader/badges/build.png?b=master)](https://scrutinizer-ci.com/g/renedekat/blmreader/build-status/master)[![StyleCI](https://styleci.io/repos/66577700/shield)](https://styleci.io/repos/66577700)
+[![StyleCI](https://styleci.io/repos/66577700/shield)](https://styleci.io/repos/66577700)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/renedekat/blmreader/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/renedekat/blmreader/?branch=master)
 
 # BLM Reader
