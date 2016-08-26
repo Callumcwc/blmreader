@@ -23,13 +23,17 @@ $ composer require renedekat/blmreader
 ## Usage
 
 ``` php
-$blmReader = Reader::create()->loadFromFile("path/to/blmFile")
-// OR
-$blmReader = Reader::create()->loadFromString($blmContents)
+use Renedekat\Blm\Drivers\Simple
 
-$rawContents = $blmReader->getRawContents();
-$collection = $blmReader->getDate();
-$array = $blmReader->toArray();
+$simple = Simple::create()->loadFromFile("path/to/blmFile")
+// OR
+$simple = Simple::create()->loadFromString($blmContents)
+
+$rawContents = $simple->getRawContents();
+$output = $simple->geOutput();
+$data = $output['data'];
+$definitions = $output['definitions']
+$headers = $output['headers;
 
 ```
 
