@@ -30,7 +30,7 @@ $simple = Simple::create()->loadFromFile("path/to/blmFile")
 $simple = Simple::create()->loadFromString($blmContents)
 
 $rawContents = $simple->getRawContents();
-$output = $simple->geOutput();
+$output = $simple->getOutput();
 $data = $output['data'];
 $definitions = $output['definitions']
 $headers = $output['headers;
