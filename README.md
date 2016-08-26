@@ -24,16 +24,21 @@ $ composer require renedekat/blmreader
 
 ``` php
 use Renedekat\Blm\Drivers\Simple
+use Renedekat\Blm\Drivers\Csv
 
 $simple = Simple::create()->loadFromFile("path/to/blmFile")
 // OR
 $simple = Simple::create()->loadFromString($blmContents)
 
 $rawContents = $simple->getRawContents();
-$output = $simple->geOutput();
+$output = $simple->getOutput();
 $data = $output['data'];
 $definitions = $output['definitions']
 $headers = $output['headers;
+
+
+$csv = Simple::create()->loadFromFile("path/to/blmFile")
+$output = $csv->getOutput();
 
 ```
 
