@@ -28,12 +28,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Renedekat\\Blm\\": "src"
+            "ReneDeKat\\Blm\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Renedekat\\Blm\\Test\\": "tests"
+            "ReneDeKat\\Blm\\Test\\": "tests"
         }
     },
     "scripts": {

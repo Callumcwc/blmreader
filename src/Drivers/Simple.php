@@ -1,14 +1,14 @@
 <?php
 
-namespace Renedekat\Blm\Drivers;
+namespace ReneDeKat\Blm\Drivers;
 
-use Renedekat\Blm\Reader;
+use ReneDeKat\Blm\Reader;
 
 class Simple extends Reader
 {
-
     /**
-     * Return the output as an array containing the keys: headers, definitions and data
+     * Return the output as an array containing the keys: headers, definitions and data.
+     *
      * @return array
      */
     public function getOutput()
@@ -16,7 +16,7 @@ class Simple extends Reader
         return [
             'headers' => $this->getHeaders()->toArray(),
             'definitions' => $this->getDefinitions()->toArray(),
-            'data' => $this->getData()->toArray()
+            'data' => $this->getData()->toArray(),
         ];
     }
 }

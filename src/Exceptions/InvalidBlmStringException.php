@@ -1,6 +1,6 @@
 <?php
 
-namespace Renedekat\Blm\Exceptions;
+namespace ReneDeKat\Blm\Exceptions;
 
 use Exception;
 
