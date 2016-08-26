@@ -2,15 +2,13 @@
 
 namespace Renedekat\Blm\Test;
 
-use Illuminate\Support\Collection;
 use PHPUnit_Framework_TestCase;
-use Renedekat\Blm\Reader;
+use Renedekat\Blm\Drivers\Simple;
 use Renedekat\Blm\Exceptions\InvalidBlmFileException;
 use Renedekat\Blm\Exceptions\InvalidBlmStringException;
 
 class BlmParserTest extends PHPUnit_Framework_TestCase
 {
-
 
     /**
      * @test
@@ -21,17 +19,11 @@ class BlmParserTest extends PHPUnit_Framework_TestCase
 
         $contents = file_get_contents($blmFile);
 
-        $reader = Reader::create()->loadFromFile($blmFile);
+        $simple = Simple::create()->loadFromFile($blmFile);
 
-        $this->assertInstanceOf(Reader::class, $reader);
+        $this->assertInstanceOf(Simple::class, $simple);
 
-        $this->assertEquals($contents, $reader->getRawContents());
-
-        $this->assertInstanceOf(Collection::class, $reader->getHeaders());
-
-        $this->assertInstanceOf(Collection::class, $reader->getDefinitions());
-
-        $this->assertInstanceOf(Collection::class, $reader->getData());
+        $this->assertEquals($contents, $simple->getRawContents());
     }
 
     /**
@@ -41,7 +33,7 @@ class BlmParserTest extends PHPUnit_Framework_TestCase
     {
         $this->expectException(InvalidBlmFileException::class);
 
-        Reader::create()->loadFromFile(dirname(__FILE__) . '/invalid.blm');
+        Simple::create()->loadFromFile(dirname(__FILE__) . '/invalid.blm');
     }
 
     /**
@@ -51,17 +43,29 @@ class BlmParserTest extends PHPUnit_Framework_TestCase
     {
         $contents = file_get_contents(dirname(__FILE__) . '/valid.blm');
 
-        $reader = Reader::create()->loadFromString($contents);
+        $simple = Simple::create()->loadFromString($contents);
 
-        $this->assertInstanceOf(Reader::class, $reader);
+        $this->assertInstanceOf(Simple::class, $simple);
 
-        $this->assertEquals($contents, $reader->getRawContents());
+        $this->assertEquals($contents, $simple->getRawContents());
+    }
 
-        $this->assertInstanceOf(Collection::class, $reader->getHeaders());
+    /**
+     * @test
+     */
+    public function gets_simple_valid_output()
+    {
+        $simple = Simple::create()->loadFromFile(dirname(__FILE__) . '/valid.blm');
 
-        $this->assertInstanceOf(Collection::class, $reader->getDefinitions());
+        $output = $simple->getOutput();
 
-        $this->assertInstanceOf(Collection::class, $reader->getData());
+        $this->assertArrayHasKey('headers', $output);
+
+        $this->assertArrayHasKey('definitions', $output);
+
+        $this->assertArrayHasKey('data', $output);
+
+        $this->assertEquals($this->getExpectedData(), $output['data']);
     }
 
     /**
@@ -73,7 +77,7 @@ class BlmParserTest extends PHPUnit_Framework_TestCase
 
         $blmContents = file_get_contents(dirname(__FILE__) . '/invalid.blm');
 
-        Reader::create()->loadFromString($blmContents);
+        Simple::create()->loadFromString($blmContents);
     }
 
     /**

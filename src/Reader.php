@@ -8,7 +8,7 @@ use Renedekat\Blm\Exceptions\InvalidBlmStringException;
 use Renedekat\PHPVerbalExpressions\VerbalExpressions;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
-class Reader
+abstract class Reader
 {
     const CONTAINS_HEADERS = 1;
     const CONTAINS_DEFINITIONS = 2;
@@ -17,22 +17,22 @@ class Reader
     /**
      * @var string Raw contents
      */
-    protected $contents = null;
+    private $contents = null;
 
     /**
      * @var Collection Parsed header
      */
-    protected $headers = null;
+    private $headers = null;
 
     /**
      * @var Collection Parsed definition
      */
-    protected $definitions = null;
+    private $definitions = null;
 
     /**
      * @var Collection Parsed data
      */
-    protected $data = null;
+    private $data = null;
 
     /**
      * @return Reader
@@ -48,7 +48,7 @@ class Reader
      * @throws FileNotFoundException
      * @throws InvalidBlmFileException
      */
-    public function loadFromFile($filePath)
+    final public function loadFromFile($filePath)
     {
         if (!file_exists($filePath)) {
             throw new FileNotFoundException();
@@ -68,7 +68,7 @@ class Reader
      * @return Reader
      * @throws InvalidBlmFileException
      */
-    public function loadFromString($contents)
+    final public function loadFromString($contents)
     {
         if (!$this->containsValidBLM($contents)) {
             throw new InvalidBlmStringException('Invalid BLM content found.');
@@ -78,9 +78,15 @@ class Reader
     }
 
     /**
+     * Return the output in the drivers format
+     * @return mixed
+     */
+    abstract public function getOutput();
+
+    /**
      * @return string
      */
-    public function getRawContents()
+    final public function getRawContents()
     {
         return $this->contents;
     }
@@ -88,7 +94,7 @@ class Reader
     /**
      * @return Collection
      */
-    public function getHeaders()
+    final protected function getHeaders()
     {
         return $this->headers;
     }
@@ -96,7 +102,7 @@ class Reader
     /**
      * @return Collection
      */
-    public function getDefinitions()
+    final protected function getDefinitions()
     {
         return $this->definitions;
     }
@@ -104,7 +110,7 @@ class Reader
     /**
      * @return Collection
      */
-    public function getData()
+    final protected function getData()
     {
         return $this->data;
     }
@@ -115,7 +121,7 @@ class Reader
      * @param string $contents
      * @return bool Returns true if content is valid
      */
-    protected function containsValidBLM($contents)
+    final protected function containsValidBLM($contents)
     {
         $contains = $this->containsHeader($contents) ? self::CONTAINS_HEADERS : 0;
         $contains += $this->containsDefinition($contents) ? self::CONTAINS_DEFINITIONS : 0;
@@ -131,7 +137,7 @@ class Reader
      * @param string $contents
      * @return bool
      */
-    protected function containsHeader($contents)
+    final protected function containsHeader($contents)
     {
         return (bool) $this->getRegexFor('#HEADER#')->test($contents);
     }
@@ -141,7 +147,7 @@ class Reader
      * @param string $contents
      * @return bool
      */
-    protected function containsDefinition($contents)
+    final protected function containsDefinition($contents)
     {
         return (bool) $this->getRegexFor('#DEFINITION#')->test($contents);
     }
@@ -151,7 +157,7 @@ class Reader
      * @param string $contents
      * @return bool
      */
-    protected function containsData($contents)
+    final protected function containsData($contents)
     {
         return (bool) $this->getRegexFor('#DATA#')->test($contents);
     }
@@ -160,7 +166,7 @@ class Reader
      * @param string $contents
      * @return Reader
      */
-    protected function parse($contents)
+    final protected function parse($contents)
     {
         $this->contents = $contents;
 
@@ -177,7 +183,7 @@ class Reader
      * Parses the #HEADER# section of the BLM file and stores it in $this->headers
      * @param string $contents
      */
-    protected function parseHeader($contents)
+    private function parseHeader($contents)
     {
         preg_match($this->getRegexFor('#HEADER#'), $contents, $match);
 
@@ -201,7 +207,7 @@ class Reader
      * Parses the #DEFINITION# section of the BLM file and stores it in $this->definitions
      * @param string $contents
      */
-    protected function parseDefinition($contents)
+    private function parseDefinition($contents)
     {
         preg_match($this->getRegexFor('#DEFINITION#'), $contents, $match);
 
@@ -224,7 +230,7 @@ class Reader
      * Parses the #DATA# section of the BLM file and stores it in $this->data
      * @param $contents
      */
-    protected function parseData($contents)
+    private function parseData($contents)
     {
         preg_match($this->getRegexFor('#DATA#'), $contents, $match);
 
