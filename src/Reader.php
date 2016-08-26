@@ -86,15 +86,19 @@ class Reader
     }
 
     /**
-     * Return array of DATA
-     * @return array
+     * @return Collection
      */
-    public function toArray()
+    public function getHeaders()
     {
-        if (is_null($this->data)) {
-            return [];
-        }
-        return $this->data->toArray();
+        return $this->headers;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getDefinitions()
+    {
+        return $this->definitions;
     }
 
     /**
@@ -103,22 +107,6 @@ class Reader
     public function getData()
     {
         return $this->data;
-    }
-
-    /**
-     * @return Collection
-     */
-    protected function getHeaders()
-    {
-        return $this->headers;
-    }
-
-    /**
-     * @return Collection
-     */
-    protected function getDefinitions()
-    {
-        return $this->definitions;
     }
 
 

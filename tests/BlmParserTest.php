@@ -27,9 +27,11 @@ class BlmParserTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($contents, $reader->getRawContents());
 
-        $this->assertInstanceOf(Collection::class, $reader->getData());
+        $this->assertInstanceOf(Collection::class, $reader->getHeaders());
 
-        $this->assertEquals($this->getExpectedData(), $reader->toArray());
+        $this->assertInstanceOf(Collection::class, $reader->getDefinitions());
+
+        $this->assertInstanceOf(Collection::class, $reader->getData());
     }
 
     /**
@@ -55,9 +57,11 @@ class BlmParserTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($contents, $reader->getRawContents());
 
-        $this->assertInstanceOf(Collection::class, $reader->getData());
+        $this->assertInstanceOf(Collection::class, $reader->getHeaders());
 
-        $this->assertEquals($this->getExpectedData(), $reader->toArray());
+        $this->assertInstanceOf(Collection::class, $reader->getDefinitions());
+
+        $this->assertInstanceOf(Collection::class, $reader->getData());
     }
 
     /**
