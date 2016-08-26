@@ -135,7 +135,7 @@ class Reader
 
         $shouldContain = self::CONTAINS_HEADERS | self::CONTAINS_DEFINITIONS | self::CONTAINS_DATA;
 
-        return ($shouldContain & $contains);
+        return (bool) ($shouldContain & $contains);
     }
 
     /**
@@ -145,7 +145,7 @@ class Reader
      */
     protected function containsHeader($contents)
     {
-        return $this->getRegexFor('#HEADER#')->test($contents);
+        return (bool) $this->getRegexFor('#HEADER#')->test($contents);
     }
 
     /**
@@ -155,7 +155,7 @@ class Reader
      */
     protected function containsDefinition($contents)
     {
-        return $this->getRegexFor('#DEFINITION#')->test($contents);
+        return (bool) $this->getRegexFor('#DEFINITION#')->test($contents);
     }
 
     /**
@@ -165,7 +165,7 @@ class Reader
      */
     protected function containsData($contents)
     {
-        return $this->getRegexFor('#DATA#')->test($contents);
+        return (bool) $this->getRegexFor('#DATA#')->test($contents);
     }
 
     /**
