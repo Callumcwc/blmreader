@@ -18,6 +18,7 @@
     ],
     "require": {
         "php": "~5.6|~7.0",
+        "friendsofphp/php-cs-fixer": "^1.12",
         "renedekat/php-verbal-expressions": "^1.0",
         "tightenco/collect": "^5.3"
     },
@@ -28,12 +29,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Renedekat\\Blm\\": "src"
+            "ReneDeKat\\Blm\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Renedekat\\Blm\\Test\\": "tests"
+            "ReneDeKat\\Blm\\Test\\": "tests"
         }
     },
     "scripts": {

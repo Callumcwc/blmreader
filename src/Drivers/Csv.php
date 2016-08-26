@@ -1,14 +1,14 @@
 <?php
 
-namespace Renedekat\Blm\Drivers;
+namespace ReneDeKat\Blm\Drivers;
 
-use Renedekat\Blm\Reader;
+use ReneDeKat\Blm\Reader;
 
 class Csv extends Reader
 {
-
     /**
-     * Returns a string with CSV data
+     * Returns a string with CSV data.
+     *
      * @return string
      */
     public function getOutput()
@@ -29,8 +29,10 @@ class Csv extends Reader
     }
 
     /**
-     * Get CSV contents from file handle
+     * Get CSV contents from file handle.
+     *
      * @param $handle
+     *
      * @return string
      */
     private function getCsvContentsFromHandle($handle)

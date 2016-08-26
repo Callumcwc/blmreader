@@ -1,12 +1,11 @@
 <?php
 
-namespace Renedekat\Blm\Exceptions;
+namespace ReneDeKat\Blm\Exceptions;
 
 use Exception;
 
 class InvalidBlmFileException extends Exception
 {
-
     /**
      * @param string $message Exception message to throw
      */

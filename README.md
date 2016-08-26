@@ -23,8 +23,8 @@ $ composer require renedekat/blmreader
 ## Usage
 
 ``` php
-use Renedekat\Blm\Drivers\Simple
-use Renedekat\Blm\Drivers\Csv
+use ReneDeKat\Blm\Drivers\Simple
+use ReneDeKat\Blm\Drivers\Csvq
 
 $simple = Simple::create()->loadFromFile("path/to/blmFile")
 // OR

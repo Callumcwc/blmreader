@@ -1,11 +1,11 @@
 <?php
 
-namespace Renedekat\Blm;
+namespace ReneDeKat\Blm;
 
 use Illuminate\Support\Collection;
-use Renedekat\Blm\Exceptions\InvalidBlmFileException;
-use Renedekat\Blm\Exceptions\InvalidBlmStringException;
-use Renedekat\PHPVerbalExpressions\VerbalExpressions;
+use ReneDeKat\Blm\Exceptions\InvalidBlmFileException;
+use ReneDeKat\Blm\Exceptions\InvalidBlmStringException;
+use ReneDeKat\PHPVerbalExpressions\VerbalExpressions;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 abstract class Reader
@@ -44,7 +44,9 @@ abstract class Reader
 
     /**
      * @param string $filePath Path to the BLM file
+     *
      * @return $this
+     *
      * @throws FileNotFoundException
      * @throws InvalidBlmFileException
      */
@@ -65,7 +67,9 @@ abstract class Reader
 
     /**
      * @param string $contents Contents of a BLM file
+     *
      * @return Reader
+     *
      * @throws InvalidBlmFileException
      */
     final public function loadFromString($contents)
@@ -78,7 +82,8 @@ abstract class Reader
     }
 
     /**
-     * Return the output in the drivers format
+     * Return the output in the drivers format.
+     *
      * @return mixed
      */
     abstract public function getOutput();
@@ -115,10 +120,11 @@ abstract class Reader
         return $this->data;
     }
 
-
     /**
-     * Validates a string
+     * Validates a string.
+     *
      * @param string $contents
+     *
      * @return bool Returns true if content is valid
      */
     final protected function containsValidBLM($contents)
@@ -133,8 +139,10 @@ abstract class Reader
     }
 
     /**
-     * Verifies if contents contain a headers sections
+     * Verifies if contents contain a headers sections.
+     *
      * @param string $contents
+     *
      * @return bool
      */
     final protected function containsHeader($contents)
@@ -143,8 +151,10 @@ abstract class Reader
     }
 
     /**
-     * Verifies if contents contain a headers sections
+     * Verifies if contents contain a headers sections.
+     *
      * @param string $contents
+     *
      * @return bool
      */
     final protected function containsDefinition($contents)
@@ -153,8 +163,10 @@ abstract class Reader
     }
 
     /**
-     * Verifies if contents contain a headers sections
+     * Verifies if contents contain a headers sections.
+     *
      * @param string $contents
+     *
      * @return bool
      */
     final protected function containsData($contents)
@@ -164,6 +176,7 @@ abstract class Reader
 
     /**
      * @param string $contents
+     *
      * @return Reader
      */
     final protected function parse($contents)
@@ -180,7 +193,8 @@ abstract class Reader
     }
 
     /**
-     * Parses the #HEADER# section of the BLM file and stores it in $this->headers
+     * Parses the #HEADER# section of the BLM file and stores it in $this->headers.
+     *
      * @param string $contents
      */
     private function parseHeader($contents)
@@ -198,13 +212,14 @@ abstract class Reader
             })->flatMap(function ($keyValuePairWithQuotes) {
                 return [
                     $keyValuePairWithQuotes[0] => preg_replace('/(^[\'"]|[\'"]$)/', '',
-                        trim($keyValuePairWithQuotes[1]))
+                        trim($keyValuePairWithQuotes[1])),
                 ];
             });
     }
 
     /**
-     * Parses the #DEFINITION# section of the BLM file and stores it in $this->definitions
+     * Parses the #DEFINITION# section of the BLM file and stores it in $this->definitions.
+     *
      * @param string $contents
      */
     private function parseDefinition($contents)
@@ -227,7 +242,8 @@ abstract class Reader
     }
 
     /**
-     * Parses the #DATA# section of the BLM file and stores it in $this->data
+     * Parses the #DATA# section of the BLM file and stores it in $this->data.
+     *
      * @param $contents
      */
     private function parseData($contents)
@@ -255,11 +271,12 @@ abstract class Reader
 
     /**
      * @param $string
+     *
      * @return VerbalExpressions
      */
     private function getRegexFor($string)
     {
-        return (new VerbalExpressions)
+        return (new VerbalExpressions())
             ->startOfLine()
             ->find($string)
             ->anythingBut('#')
@@ -268,6 +285,7 @@ abstract class Reader
 
     /**
      * @param $line
+     *
      * @return bool
      */
     private function isValidLineWithoutHash($line)
@@ -276,6 +294,7 @@ abstract class Reader
     }
     /**
      * @param array $record
+     *
      * @return array
      */
     private function mapRecordToDefinitionValue($record)
