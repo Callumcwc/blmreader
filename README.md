@@ -26,6 +26,7 @@ $ composer require renedekat/blmreader
 use ReneDeKat\Blm\Drivers\Simple
 use ReneDeKat\Blm\Drivers\Csvq
 
+// Create simple (array) output
 $simple = Simple::create()->loadFromFile("path/to/blmFile")
 // OR
 $simple = Simple::create()->loadFromString($blmContents)
@@ -36,8 +37,8 @@ $data = $output['data'];
 $definitions = $output['definitions']
 $headers = $output['headers;
 
-
-$csv = Simple::create()->loadFromFile("path/to/blmFile")
+// Create CSV output
+$csv = Csv::create()->loadFromFile("path/to/blmFile")
 $output = $csv->getOutput();
 
 ```
