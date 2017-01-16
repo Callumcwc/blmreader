@@ -7,6 +7,7 @@
 [![Build Status](https://scrutinizer-ci.com/g/renedekat/blmreader/badges/build.png?b=master)](https://scrutinizer-ci.com/g/renedekat/blmreader/build-status/master)
 [![StyleCI](https://styleci.io/repos/66577700/shield)](https://styleci.io/repos/66577700)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/renedekat/blmreader/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/renedekat/blmreader/?branch=master)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/7450475c-831a-4e25-b43a-bd45a1302ded/mini.png)](https://insight.sensiolabs.com/projects/7450475c-831a-4e25-b43a-bd45a1302ded)
 
 # BLM Reader
 
