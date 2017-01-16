@@ -24,13 +24,13 @@ $ composer require renedekat/blmreader
 ## Usage
 
 ``` php
-use ReneDeKat\Blm\Drivers\Simple
-use ReneDeKat\Blm\Drivers\Csvq
+use ReneDeKat\Blm\Drivers\Simple;
+use ReneDeKat\Blm\Drivers\Csvq;
 
 // Create simple (array) output
-$simple = Simple::create()->loadFromFile("path/to/blmFile")
+$simple = Simple::create()->loadFromFile("path/to/blmFile");
 // OR
-$simple = Simple::create()->loadFromString($blmContents)
+$simple = Simple::create()->loadFromString($blmContents);
 
 $rawContents = $simple->getRawContents();
 $output = $simple->getOutput();
